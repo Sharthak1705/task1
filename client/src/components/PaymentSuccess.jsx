@@ -1,46 +1,40 @@
 import React, { useEffect } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { Container, Button, Alert } from 'react-bootstrap'; 
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+
 const PaymentSuccess = () => {
-  const [searchParams] = useSearchParams();
-  const sessionId = searchParams.get('session_id');
   const navigate = useNavigate();
 
   useEffect(() => {
-    const savePaymentDetails = async () => {
-      try {
-        const response = await axios.post('http://localhost:5000/api/payment/save-payment', {
-          session_id: sessionId,
-        });
-        console.log('Payment details saved:', response.data);
-      } catch (error) {
-        console.error('Error saving payment details:', error);
-      }
-    };
+    const sessionId = Cookies.get('sessionId');
+    console.log('Session ID from cookie:', sessionId);
+  }, []);
 
-    if (sessionId) {
-      savePaymentDetails(); 
-    }
-  }, [sessionId]);
-
+  const handleBack = () => {
+    navigate('/');
+  };
   return (
-    <Container style={{ textAlign: 'center', padding: '50px' }}>
-      <Alert variant="success">
-        <h1>Payment Successful!</h1>
-        <p>Thank you for your purchase. Your payment has been successfully processed.</p>
-      </Alert>
-      <Button
-        variant="success"
-        onClick={() => navigate('/')}
-        size="lg"
-        style={{ marginTop: '20px' }}
+    <div style={{ textAlign: 'center', padding: '50px' }}>
+      <h1>🎉 Payment Successful!</h1>
+      <p>Your payment was processed successfully.</p>
+
+      <button
+        onClick={handleBack}
+        style={{
+          marginTop: '20px',
+          padding: '10px 20px',
+          backgroundColor: '#4CAF50',
+          color: 'white',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: 'pointer',
+          fontSize: '16px',
+        }}
       >
-        Back to Home
-      </Button>
-    </Container>
+        🔙 Back to Home
+      </button>
+    </div>
   );
 };
+
 export default PaymentSuccess;
-
-

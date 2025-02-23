@@ -1,17 +1,17 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom'; 
+import { BrowserRouter, Route, Routes} from 'react-router-dom'; 
 import From from './components/Form'
+import Payment from './components/Checkout'
+import PaymentSuccess from './components/PaymentSuccess';
+import PaymentFailure from './components/PaymentFailure';
 const App = () => {
   return (
    <BrowserRouter>
       <Routes>
          <Route path='/' element= {<From />} />
-        
-        {/* <Route path='/' element={<CardPage />}>
-          <Route path="/" element={<CardPage />} />
-          <Route path="/add-product" element={<AddProductPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} /> */}
-        {/* </Route> */}
+          <Route path="/checkout" element={<Payment />} /> 
+          <Route path= "/success" element={<PaymentSuccess />}/>
+          <Route path = "/cancel" element= {<PaymentFailure /> }/>
       </Routes>
     </BrowserRouter>
   );
